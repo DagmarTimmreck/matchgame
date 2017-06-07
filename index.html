@@ -1,14 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1.0">
+  <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+  <link href="./resources/css/style.css" rel="stylesheet" type="text/css">
   <title>Match Game</title>
 </head>
+
 <body>
-  <script
-    src="https://code.jquery.com/jquery-3.1.1.min.js"
-    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-    crossorigin="anonymous"></script>
+  <section class="description">
+    <h1>Match Game</h1>
+    <h2>Rules</h2>
+    <p>
+      Click on a card to reveal the number on the other side. Click on a second card to try and find a match to the first. If you succeed, the pair will be removed from play. If not, try again!
+    </p>
+    <h2>How To Win</h2>
+    <p>
+      You win when all pairs have been found.
+    </p>
+  </section>
+  <section id="game">
+    <!-- Here the game is rendered by the script below -->
+  </section>
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script type="text/javascript" src="./resources/js/match-game.js"></script>
   <script type="text/javascript" src="./resources/js/tests.js"></script>
 </body>
+
 </html>
