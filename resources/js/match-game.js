@@ -1,40 +1,32 @@
-$(document).ready(function() {
-  var cardValues = MatchGame.generateCardValues();
-  $game = $('#game');
-  MatchGame.renderCards(cardValues, $game);
-});
-
-var MatchGame = {
-};
+var MatchGame = {};
 
 /*
   Sets up a new game after HTML document has loaded.
   Renders a 4x4 board of cards.
 */
+$(document).ready(function() {
+  $game = $('#game');
+  MatchGame.renderCards(MatchGame.generateCardValues(), $game);
+});
+
 
 /*
   Generates and returns an array of matching card values.
  */
 
-MatchGame.generateCardValues = function () {
-  var cardValues = [];
-  var alreadyTaken;
-  var random;
-  var index;
-  for (var i=0; i<16;i++) {
-    alreadyTaken = true;
-    while (alreadyTaken) {
-      random = Math.floor(Math.random()*8) +1;
-      index = cardValues.indexOf(random);
-      alreadyTaken = (index > -1);
-      if (alreadyTaken) {
-        index = cardValues.indexOf(random, index + 1);
-        alreadyTaken = (index > -1);
-      }
-    }
-    cardValues.push(random);
+MatchGame.generateCardValues = function() {
+  var values = [];
+  for (var i = 1; i <= 8; i++) {
+    values.push(i);
+    values.push(i);
   }
-  return cardValues;
+  var shuffled = [];
+  while (values.length > 0){
+    var index = Math.floor(Math.random()*values.length);
+    shuffled.push(values[index]);
+    values.splice(index, 1);
+  }
+  return shuffled;
 };
 
 /*
@@ -44,19 +36,25 @@ MatchGame.generateCardValues = function () {
 
 MatchGame.renderCards = function(cardValues, $game) {
   $game.data('flippedCards', []);
-  var colors = ['green', 'red', 'yellow', 'black', 'orange', 'brown', 'indigo', 'grey'];
   $game.empty();
-  cardValues.forEach (function(value){
-    var $card = $('<div class="card"></div>');
-    $card.data('value', value);
-    $card.data('flipped', false);
-    $card.data('color', colors[value-1]);
+  for (var i = 0; i < 16; i++) {
+    var $card = MatchGame.createCard(cardValues[i]);
     $game.append($card);
-    $card.on('click', function(){
-      MatchGame.flipCard($card, $game);
-    });
-  });
+
+  }
 };
+
+MatchGame.createCard = function(value) {
+  var colors = ['green', 'red', 'yellow', 'black', 'orange', 'brown', 'indigo', 'grey'];
+  var $card = $('<div class="card"><div>');
+  $card.data('value', value);
+  $card.data('flipped', false);
+  $card.data('color', colors[value - 1]);
+  $card.on('click', function() {
+    MatchGame.flipCard($card, $game);
+  });
+  return $card;
+}
 
 /*
   Flips over a given card and checks to see if two cards are flipped over.
@@ -64,35 +62,41 @@ MatchGame.renderCards = function(cardValues, $game) {
  */
 
 MatchGame.flipCard = function($card, $game) {
-  if ($card.data('flipped')){
+  if ($card.data('flipped')) {
     return;
   }
-  $card.text($card.data('value'));
-  $card.css('background-color', $card.data('color'));
-  $card.data('flipped', true);
-  if ($game.data('flippedCards').length === 1) {
-    var $anotherCard = $game.data('flippedCards')[0];
-    if ($anotherCard.data('value') === $card.data('value')){
-      $card.css('background-color', 'lightgrey');
-      $card.css('color', 'darkgrey');
-      $anotherCard.css('background-color', 'lightgrey');
-      $anotherCard.css('color', 'darkgrey');
-    }
-    else {
-      MatchGame.flipBack($card);
-      MatchGame.flipBack($anotherCard);
+  MatchGame.flip($card);
+  var flipped = $game.data('flippedCards');
+  flipped.push($card);
+  if (flipped.length === 2) {
+    var $anotherCard = flipped[0];
+    if ($card.data('value') === $anotherCard.data('value')) {
+      MatchGame.matched($card);
+      MatchGame.matched($anotherCard);
+
+    } else {
+      window.setTimeout(function () {
+        MatchGame.unflip($card);
+        MatchGame.unflip($anotherCard);
+      }, 500);
     }
     $game.data('flippedCards', []);
   }
-  else {
-    $game.data('flippedCards').push($card);
-  }
 };
 
-MatchGame.flipBack = function($card) {
-  window.setTimeout(function() {
-    $card.css('background-color', 'blue');
-    $card.text("");
-    $card.data('flipped', false);
-  }, 500);
+MatchGame.flip = function($card) {
+  $card.css('background-color', $card.data('color'));
+  $card.text($card.data('value'));
+  $card.data('flipped', true);
+}
+
+MatchGame.unflip = function($card) {
+  $card.css('background-color', 'rgb(32, 64, 86)');
+  $card.empty();
+  $card.data('flipped', false);
+}
+
+MatchGame.matched = function($card) {
+  $card.css('background-color', 'rgb(153, 153, 153)');
+  $card.css('color', 'grey');
 }

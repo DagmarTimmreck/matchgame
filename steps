@@ -1,0 +1,85 @@
+1) Get project skeleton and spec and run the tests (original steps 1-2)
+2) Build the web page according to the design spec.
+   To go with the instructions for javascript later make sure the cards
+   live in a container with id #game and have a class of .card each.
+   Ignore the color settings for the flipped cards.
+   Style one card with a number.
+   (Detailed guide: original steps 1-20)
+
+I suggest a different order of steps here to make sure you can check
+your results after every step.
+
+3) Display something!
+  - Add the $(document).ready() function.
+  Inside it:
+    - Make a jQuery object containing the #game HTML element.
+    - Empty this object's HTML. (The cards on your webpage are gone!)
+    - Create a new jQuery object with the same HTML code you used to render a card in your index.html.
+    - Append the card object to the game object.
+  Now look at your webpage. There should be one card.
+
+4) Start implementing renderCards():
+   Overview original steps 33+34 (we will spit this process here)
+    - Refactor your code in the following way:
+      - Move the code you wrote in 3) to generate and render a card into the
+        renderCards() function and call that function with the game object and an
+        array with 16 entries as arguments in that place instead.
+        (For simplicity you can use the array [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1])
+    - Make sure your card is still displayed!
+      Check the console for errors.
+      If the error message is something with "not defined" check for typos.
+    - Now display 16 cards by creating a loop through the given array
+      around the code in renderCards().
+    - Give each card the number of the corresponding array entry as text to see an
+      additional effect.
+
+5) Start implementing generateCardValues():
+   Overview: original steps 21+22 (we will spit this process here)
+   Run the tests. The first fainling test reads generateCardValues should return an array.
+  - Create an empty array and return this array from the function.
+  The first failing test has changed! It now tells us what is expected
+  from the function.
+  - Fill the array with the numbers 1 - 8 twice.
+    (Detailed guide: original steps 24-25)
+    This will already make the corresponding tests pass!
+  - Pass the result of this function to the renderCards function call inside
+  $(document).ready().
+    Now the cards should be rendered with values 1-8 twice.
+
+6) Continue implementing renderCards():
+   Running the tests reveals that the cards should have some data on them!
+   - Clear the text from your cards. I t was just for visual feedback.
+   - Now give the cards the data called for in original steps 38-41.
+     Do this before you append the card to the game. (Not stricly necessry but better for readibility)
+   Run the tests again. Now only tests concerning flipping cards should be failing.
+   - Add an event listener as described in original step 55
+   You can't see effects here so consider looking for errors in these steps when the next step fails.
+
+7) Start implementing flipCard()
+   After each step try if the game behaves as expected
+   and continue running the tests!
+   - Change the color of the flipped card to something else, e.g. red.
+   - Change the color of the flipped card to the color specified in its data
+   - Add text to the card according to its data
+   - Update the data on the card to indicate that it has been flipped over.
+     (No visible effect yet)
+   - Now if the card has already been flipped, unflip it!
+     i.e. restore the background-color to the unnumbered side, empty the text
+     and set the data that indicates the flipping.
+     Then return from the function.
+   Now you can flip and unflip cards. But that is not (yet) the behaviour we want.
+   So we need a means to check whether the game has two flipped cards.
+   - Now complete the missing original steps which are 47, 48, 50-54
+     In the course of this  will have to move the unflipping the right place
+     and can check your progress visually after step 52 and 53.
+   Now you can already play the game! But the second card of a turn unflips so fast you can't see it!
+   As you know which card is where you can test it anyway.
+   - Complete step 56 to see the second card.
+   Now all tests pass. All that remains is to create an arbitrary hand of cards.
+
+8) Finish to implement generateCardValues():
+  - From the sorted array create a shuffled array and return the shuffled array instead.
+    (Detailed guide: original steps 26-31)
+  - Check that the tests still pass and that you get different arrays for each call.
+
+Done!
