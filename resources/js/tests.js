@@ -80,7 +80,7 @@ MatchGameTests.testRenderCards = function(errors) {
 };
 
 MatchGameTests.testFlipCard = function(errors) {
-  var $game = $('<div>');
+  var $game = $('#game');
   var cardValues = [1, 1, 2];
   MatchGame.renderCards(cardValues, $game);
   var $cards = $game.find('.card');

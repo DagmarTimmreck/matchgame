@@ -1,16 +1,47 @@
+html {
+  font-family: sans-serif;
+  font-size: 2vh;
+  color: rgb(32, 64, 86);
+  background-color: white;
+}
 
+body,
 section {
   box-sizing: border-box;
-  display: inline-flex;
-  width: 100%;
-}
-.description {
+  display: flex;
   flex-direction: column;
-}
-#game {
-  flex-wrap: wrap;
   justify-content: center;
   align-content: center;
+  width: 100%;
+  margin: 0;
+}
+
+
+.btn {
+  width: 75%;
+  padding: 1rem 0;
+  border-radius: 0.5rem;
+  margin: 1rem auto;
+  text-align: center;
+  color: white;
+  background-color: rgb(32, 64, 86);
+  cursor: pointer;
+}
+
+.panel {
+  width: 75%;
+  padding: 1rem 0.5rem;
+  border: 0.25rem solid rgb(32, 64, 86);
+  border-radius: 0.5rem;
+  margin: 1rem auto;
+  font-size: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+#game {
+  flex-flow: row wrap;
+  padding-top: 1rem;
 }
 
 .card {
@@ -19,20 +50,29 @@ section {
   align-items: center;
   justify-content: center;
   width: 25%;
-  height: 23vh;
+  height: 18vh;
   border: 4px solid white;
-  border-radius: 25%;
-  background-color: blue;
+  border-radius: 1rem;
+  background-color: rgb(32, 64, 86);
   color: white;
-  font-size: 128px;
+  font-size: 7rem;
   cursor: pointer;
 }
 
 @media only screen and (min-width: 992px){
+  html {
+    font-size: 18px;
+  }
+  body {
+    flex-direction: row;
+  }
   .description {
     width: 24%;
   }
   #game {
     width: 75%;
+  }
+  .card {
+    height: 23vh;
   }
 }
